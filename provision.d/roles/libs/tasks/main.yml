@@ -1,0 +1,12 @@
+- name: install required deb packages
+  become: yes
+  apt: pkg={{ item }} state=installed update_cache=yes
+  with_items:
+  - curl
+  - git
+  - cmake
+  - build-essential
+  - make
+  - gcc
+  - g++
+  - libudev-dev

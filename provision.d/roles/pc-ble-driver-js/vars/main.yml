@@ -1,0 +1,3 @@
+---
+repo_name: 'pc-ble-driver-js'
+repo_dir: '/home/vagrant/repos/{{repo_name}}'

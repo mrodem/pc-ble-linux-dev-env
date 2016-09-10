@@ -1,0 +1,15 @@
+- stat: path=/opt/downloads/jlink.deb
+  register: jlink_deb
+
+- name: download jlink deb package
+  become: yes
+  when: jlink_deb.stat.exists == False
+  uri:
+    url: https://www.segger.com/downloads/jlink/JLink_Linux_V600i_x86_64.deb
+    method: POST
+    body: "accept_license_agreement=accepted"
+    dest: /opt/downloads/jlink.deb
+
+- name: install jlink deb package
+  become: yes
+  apt: deb=/opt/downloads/jlink.deb

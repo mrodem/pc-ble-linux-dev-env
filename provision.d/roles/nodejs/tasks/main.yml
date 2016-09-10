@@ -1,0 +1,16 @@
+- name: download nodesource setup
+  become: yes
+  get_url:
+    url: https://deb.nodesource.com/setup_6.x
+    dest: /opt/downloads/nodesource_setup.sh
+    mode: 0775
+
+- name: add nodejs to apt sources list
+  become: yes
+  shell: /opt/downloads/nodesource_setup.sh
+
+- name: install nodejs package
+  become: yes
+  apt: pkg={{ item }} state=installed
+  with_items:
+  - nodejs

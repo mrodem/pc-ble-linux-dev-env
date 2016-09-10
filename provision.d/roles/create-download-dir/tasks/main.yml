@@ -1,0 +1,6 @@
+- name: create download directory
+  become: yes
+  file:
+    path: /opt/downloads
+    state: directory
+    recurse: yes

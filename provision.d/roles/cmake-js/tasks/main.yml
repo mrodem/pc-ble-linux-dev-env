@@ -1,0 +1,3 @@
+- name: install cmake-js npm module
+  become: yes
+  shell: npm install -g cmake-js

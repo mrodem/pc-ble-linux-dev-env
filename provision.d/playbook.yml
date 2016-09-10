@@ -1,0 +1,16 @@
+- hosts: all
+  roles:
+    - libs
+    - create-download-dir
+    - nodejs
+    - jlink
+    - nrfjprog
+    - boost
+    - dialout-group
+    - cmake-js
+    - pc-ble-driver
+    - pc-ble-driver-js
+  vars:
+    - boost_version: '1.61.0'
+    - boost_underscored_version: '1_61_0'
+    - boost_root: '/opt/boost_{{boost_underscored_version}}'

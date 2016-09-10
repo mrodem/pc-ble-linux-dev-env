@@ -1,0 +1,4 @@
+- name: clone {{repo_name}}
+  git: >
+    repo=https://github.com/NordicSemiconductor/{{repo_name}}.git
+    dest={{repo_dir}}

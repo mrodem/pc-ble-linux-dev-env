@@ -1,0 +1,3 @@
+- name: add vagrant user to dialout group so that it can access serial port
+  become: yes
+  user: name=vagrant groups=dialout append=yes

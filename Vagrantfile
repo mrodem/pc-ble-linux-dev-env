@@ -19,6 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
       vb.customize ["modifyvm", :id, "--natdnsproxy1", "on"]
   end
-  config.vm.provision :shell, :inline => "sed -i 's/us.archive/no.archive/g' /etc/apt/sources.list"
-  config.vm.provision :shell, path: "bootstrap.sh"
+  config.vm.provision "ansible_local" do |ansible|
+    ansible.playbook = "provision.d/playbook.yml"
+  end
 end

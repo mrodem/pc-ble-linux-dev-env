@@ -1,0 +1,20 @@
+- name: download nrfjprog tar
+  become: yes
+  get_url:
+    url: https://www.nordicsemi.com/eng/nordic/download_resource/51386/15/89856469
+    dest: /opt/downloads/nrfjprog.tar
+
+- name: unpack nrfjprog tar
+  become: yes
+  unarchive: >
+    src=/opt/downloads/nrfjprog.tar
+    dest=/opt
+
+- name: add {{nrfjprog_home}} to path
+  become: yes
+  lineinfile: >
+    dest=/etc/environment
+    state=present
+    backrefs=yes
+    regexp='PATH=(["]*)((?!.*?{{nrfjprog_home}}).*?)(["]*)$'
+    line="PATH=\1\2:{{nrfjprog_home}}\3"

@@ -1,0 +1,50 @@
+- name: create {{boost_root}}
+  become: yes
+  file:
+    path: '{{boost_root}}'
+    state: directory
+    recurse: yes
+
+- stat: path=/opt/downloads/boost_{{boost_underscored_version}}.tar.bz2
+  register: boost_archive
+
+- name: download boost
+  when: boost_archive.stat.exists == False
+  become: yes
+  get_url:
+    url: http://downloads.sourceforge.net/project/boost/boost/{{boost_version}}/boost_{{boost_underscored_version}}.tar.bz2
+    dest: /opt/downloads/boost_{{boost_underscored_version}}.tar.bz2
+    timeout: 1000
+
+- stat: path={{boost_root}}/bootstrap.sh
+  register: bootstrap_script
+
+- name: unpack boost
+  when: bootstrap_script.stat.exists == False
+  become: yes
+  command: tar xjf /opt/downloads/boost_{{boost_underscored_version}}.tar.bz2 -C /opt
+
+- stat: path={{boost_root}}/b2
+  register: b2_script
+
+- name: bootstrap boost
+  when: b2_script.stat.exists == False
+  become: yes
+  command: chdir={{boost_root}} ./bootstrap.sh
+
+- stat: path={{boost_root}}/bin.v2
+  register: bin_v2
+
+- name: build boost
+  when: bin_v2.stat.exists == False
+  become: yes
+  command: chdir={{boost_root}} ./b2 toolset=gcc cxxflags=-fPIC cflags=-fPIC address-model=64 link=static --with-thread --with-system --with-regex --with-date_time --with-chrono
+
+- name: add {{boost_root}} to path
+  become: yes
+  lineinfile: >
+    dest=/etc/environment
+    state=present
+    backrefs=yes
+    regexp='PATH=(["]*)((?!.*?{{boost_root}}).*?)(["]*)$'
+    line="PATH=\1\2:{{boost_root}}\3"
