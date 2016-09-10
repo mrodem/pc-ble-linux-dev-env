@@ -3,7 +3,7 @@
 
 VAGRANTFILE_API_VERSION = "2"
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
-  config.vm.box = "bstoots/xubuntu-16.04-desktop-amd64"
+  config.vm.box = "mrodem/xubuntu-16.04-desktop-amd64"
   config.vm.synced_folder ".", "/vagrant"
   config.vm.provider "virtualbox" do |vb|
       vb.name = "pc-ble-linux-dev-env"
