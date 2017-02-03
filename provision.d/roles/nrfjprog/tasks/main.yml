@@ -1,7 +1,7 @@
 - name: download nrfjprog tar
   become: yes
   get_url:
-    url: https://www.nordicsemi.com/eng/nordic/download_resource/51386/15/89856469
+    url: https://www.nordicsemi.com/eng/nordic/download_resource/51386/20/36370540
     dest: /opt/downloads/nrfjprog.tar
 
 - name: unpack nrfjprog tar
